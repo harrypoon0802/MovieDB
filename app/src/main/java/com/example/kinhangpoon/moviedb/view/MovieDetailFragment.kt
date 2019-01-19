@@ -16,6 +16,7 @@ class MovieDetailFragment : Fragment(), MovieDetailContract.View {
 
     lateinit var movie: MovieResponse
     lateinit var movieDetailPresenter: MovieDetailContract.Presenter
+
     val TITLE = "Title: "
     val ORIGINAL_TITLE = "Original Title: "
     val OVERVIEW = "Overview: "
