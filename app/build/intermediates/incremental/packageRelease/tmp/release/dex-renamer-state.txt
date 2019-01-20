@@ -1,0 +1,4 @@
+#Sun Jan 20 01:51:45 EST 2019
+base.0=/Users/KinhangPoon/AndroidStudioProjects/MovieDB/app/build/intermediates/dex/release/mergeDexRelease/out
+path.0=classes.dex
+renamed.0=classes.dex
