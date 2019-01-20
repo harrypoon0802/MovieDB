@@ -6,7 +6,7 @@ import com.example.kinhangpoon.moviedb.model.service.MovieSearchRepository
 class MovieSearchPresenterImpl(val view: MovieSearchContract.View, val movieSearchRepository: MovieSearchRepository) :
     MovieSearchContract.Presenter {
 
-    private val movieSearchCallback = object : MovieSearchRepository.movieSearchCallback{
+    private val movieSearchCallback = object : MovieSearchRepository.movieSearchCallback {
         override fun onSuccess(movies: MutableList<MovieResponse>) {
             view.dismissLoadingDialog()
             view.showTitle()
@@ -19,6 +19,7 @@ class MovieSearchPresenterImpl(val view: MovieSearchContract.View, val movieSear
         }
 
     }
+
     override fun searchByQuery(text: String, index: String) {
         view.showLoadingDialog()
         movieSearchRepository.searchByQuery(text, index, movieSearchCallback)

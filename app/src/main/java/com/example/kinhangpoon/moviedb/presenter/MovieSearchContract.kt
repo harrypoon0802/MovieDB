@@ -2,8 +2,8 @@ package com.example.kinhangpoon.moviedb.presenter
 
 import com.example.kinhangpoon.moviedb.model.response.MovieResponse
 
-interface MovieSearchContract{
-    interface View{
+interface MovieSearchContract {
+    interface View {
         fun showErrorMessage()
         fun updateView(movies: MutableList<MovieResponse>)
         fun showLoadingDialog()
@@ -11,7 +11,8 @@ interface MovieSearchContract{
         fun showTitle()
 
     }
-    interface Presenter{
+
+    interface Presenter {
         fun searchByQuery(text: String, index: String)
 
     }
