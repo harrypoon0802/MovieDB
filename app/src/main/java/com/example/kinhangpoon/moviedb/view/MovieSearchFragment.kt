@@ -16,16 +16,17 @@ import android.widget.AbsListView
 import android.widget.Toast
 import com.example.kinhangpoon.moviedb.MovieSearchActivity.Companion.QUERY_EXTRAS
 import com.example.kinhangpoon.moviedb.R
+import com.example.kinhangpoon.moviedb.dagger.components.DaggerMovieSearchComponent
+import com.example.kinhangpoon.moviedb.dagger.components.DaggerNetworkComponent
+import com.example.kinhangpoon.moviedb.dagger.module.MovieSearchModule
+import com.example.kinhangpoon.moviedb.dagger.module.NetworkModule
 import com.example.kinhangpoon.moviedb.model.adapter.MovieAdapter
 import com.example.kinhangpoon.moviedb.model.response.MovieResponse
-import com.example.kinhangpoon.moviedb.model.service.MovieSearchApi
-import com.example.kinhangpoon.moviedb.model.service.MovieSearchRepository
-import com.example.kinhangpoon.moviedb.model.service.RetrofitInstance
-import com.example.kinhangpoon.moviedb.presenter.MovieSearchContract
 import com.example.kinhangpoon.moviedb.presenter.MovieSearchPresenterImpl
 import kotlinx.android.synthetic.main.fragment_movie_search.*
+import javax.inject.Inject
 
-class MovieSearchFragment : Fragment(), MovieSearchContract.View {
+class MovieSearchFragment : Fragment(), MovieSearchView {
 
     interface MovieHost {
         fun showLoadingDialog(isShow: Boolean)
@@ -33,7 +34,9 @@ class MovieSearchFragment : Fragment(), MovieSearchContract.View {
         fun setQueryText(text: String)
     }
 
-    lateinit var movieSearchPresenter: MovieSearchContract.Presenter
+    @field:[Inject]
+    internal lateinit var movieSearchPresenter: MovieSearchPresenterImpl
+
     lateinit var movieAdapter: MovieAdapter
     lateinit var movieList: MutableList<MovieResponse>
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -52,13 +55,11 @@ class MovieSearchFragment : Fragment(), MovieSearchContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        resolveDaggerDependency()
         val bundle = arguments
         if (bundle != null) {
             query = bundle.getString(QUERY_EXTRAS)
         }
-        val movieSearchApi = RetrofitInstance.getRetrofitInstance()?.create(MovieSearchApi::class.java)
-        val movieSearchRepository = MovieSearchRepository(movieSearchApi)
-        movieSearchPresenter = MovieSearchPresenterImpl(this, movieSearchRepository)
         movieList = mutableListOf()
         movieAdapter = MovieAdapter(movieList, object : MovieAdapter.SelectedMovieDelegate {
             override fun onMovieSelected(
@@ -69,6 +70,18 @@ class MovieSearchFragment : Fragment(), MovieSearchContract.View {
         })
     }
 
+    private fun resolveDaggerDependency() {
+        val networkComponent = DaggerNetworkComponent
+            .builder()
+            .networkModule(NetworkModule(BASE_URL, requireContext()))
+            .build()
+
+        DaggerMovieSearchComponent.builder()
+            .networkComponent(networkComponent)
+            .movieSearchModule(MovieSearchModule(this))
+            .build().inject(this)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_movie_search, container, false)
     }
@@ -76,7 +89,7 @@ class MovieSearchFragment : Fragment(), MovieSearchContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         /**
-         * check query text so that it can automatically set query when screen orientation changes
+         * check query text so that it can automatically set query when configuration changes
          */
         if (!query.isEmpty()) {
             search_text.setText(query)
@@ -137,19 +150,27 @@ class MovieSearchFragment : Fragment(), MovieSearchContract.View {
 
     private fun fetchData(text: String, index: Int) {
         if (index > 100) {
-            Toast.makeText(context, R.string.no_more_results, Toast.LENGTH_SHORT).show()
+            showNoResultMessage()
             return;
         }
         Handler().postDelayed({ movieSearchPresenter.searchByQuery(text, "$index") }, 300)
     }
 
     override fun showErrorMessage() {
-        Toast.makeText(context, R.string.network_error, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, R.string.network_error, Toast.LENGTH_LONG).show()
     }
 
     override fun updateView(movies: MutableList<MovieResponse>) {
         movieList.addAll(movies)
         movieAdapter.notifyDataSetChanged()
+        if(movieList.isEmpty()){
+            showNoResultMessage()
+            title.visibility = View.GONE
+        }
+    }
+
+    private fun showNoResultMessage() {
+        Toast.makeText(context, R.string.no_results, Toast.LENGTH_LONG).show()
     }
 
     override fun showLoadingDialog() {
@@ -165,6 +186,8 @@ class MovieSearchFragment : Fragment(), MovieSearchContract.View {
     }
 
     companion object {
+        val BASE_URL = "https://api.themoviedb.org/3/search/"
+
         fun buildMovieSearchFragment(query: String): MovieSearchFragment {
             val movieSearchFragment = MovieSearchFragment()
             val bundle = Bundle()

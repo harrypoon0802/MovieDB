@@ -889,7 +889,7 @@ int string app_name 0x7f0b001e
 int string loading_data 0x7f0b001f
 int string movies 0x7f0b0020
 int string network_error 0x7f0b0021
-int string no_more_results 0x7f0b0022
+int string no_results 0x7f0b0022
 int string query_hint 0x7f0b0023
 int string search_menu_title 0x7f0b0024
 int string status_bar_notification_info_overflow 0x7f0b0025

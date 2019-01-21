@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sun Jan 20 01:49:29 EST 2019
+#Sun Jan 20 21:37:18 EST 2019
 1.base=/Users/KinhangPoon/AndroidStudioProjects/MovieDB/app/build/intermediates/dex/debug/mergeProjectDexDebug/out
 0.baseType=DIRECTORY
 1.baseType=DIRECTORY

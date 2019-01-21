@@ -7,16 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.kinhangpoon.moviedb.MovieSearchActivity.Companion.MOVIE_EXTRAS
 import com.example.kinhangpoon.moviedb.R
+import com.example.kinhangpoon.moviedb.dagger.components.DaggerMovieDetailComponent
+import com.example.kinhangpoon.moviedb.dagger.module.MovieDetailModule
 import com.example.kinhangpoon.moviedb.model.response.MovieResponse
-import com.example.kinhangpoon.moviedb.presenter.MovieDetailContract
 import com.example.kinhangpoon.moviedb.presenter.MovieDetailPresenterImpl
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import javax.inject.Inject
 
-class MovieDetailFragment : Fragment(), MovieDetailContract.View {
+class MovieDetailFragment : Fragment(), MovieDetailView {
+
+    @field:[Inject]
+    lateinit var movieDetailPresenter: MovieDetailPresenterImpl
 
     lateinit var movie: MovieResponse
-    lateinit var movieDetailPresenter: MovieDetailContract.Presenter
-
     val TITLE = "Title: "
     val ORIGINAL_TITLE = "Original Title: "
     val OVERVIEW = "Overview: "
@@ -28,12 +31,20 @@ class MovieDetailFragment : Fragment(), MovieDetailContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        resolveDaggerDependency()
 
         val bundle = arguments
         if (bundle != null) {
             movie = bundle.getParcelable(MOVIE_EXTRAS)
         }
         movieDetailPresenter = MovieDetailPresenterImpl(this)
+    }
+
+    private fun resolveDaggerDependency() {
+
+        DaggerMovieDetailComponent.builder()
+            .movieDetailModule(MovieDetailModule(this))
+            .build().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,7 +58,7 @@ class MovieDetailFragment : Fragment(), MovieDetailContract.View {
         movie_origin_title.text = ORIGINAL_TITLE + movie.originalTitle
         movie_overview.text = OVERVIEW + movie.overview
         movie_release_date.text = RELEASE_DATE + movie.releaseDate
-        movie_popularity.text = POPULARITY+ movie.popularity
+        movie_popularity.text = POPULARITY + movie.popularity
         movie_vote_count.text = VOTE_COUNT + movie.voteCount
         movie_vote_average.text = VOTE_AVERAGE + movie.voteAverage
     }

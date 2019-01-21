@@ -1723,7 +1723,7 @@ public final class R {
      * <tr><td>barrier</td><td>2</td><td></td></tr>
      * <tr><td>chains</td><td>4</td><td></td></tr>
      * <tr><td>dimensions</td><td>8</td><td></td></tr>
-     * <tr><td>direct</td><td>1</td><td>direct, barriers, chains</td></tr>
+     * <tr><td>direct</td><td>1</td><td></td></tr>
      * <tr><td>groups</td><td>20</td><td></td></tr>
      * <tr><td>none</td><td>0</td><td></td></tr>
      * <tr><td>standard</td><td>7</td><td></td></tr>
@@ -3237,7 +3237,7 @@ public final class R {
     public static final int loading_data=0x7f0b001f;
     public static final int movies=0x7f0b0020;
     public static final int network_error=0x7f0b0021;
-    public static final int no_more_results=0x7f0b0022;
+    public static final int no_results=0x7f0b0022;
     public static final int query_hint=0x7f0b0023;
     public static final int search_menu_title=0x7f0b0024;
     public static final int status_bar_notification_info_overflow=0x7f0b0025;
@@ -7699,7 +7699,7 @@ public final class R {
      * <tr><td>barrier</td><td>2</td><td></td></tr>
      * <tr><td>chains</td><td>4</td><td></td></tr>
      * <tr><td>dimensions</td><td>8</td><td></td></tr>
-     * <tr><td>direct</td><td>1</td><td>direct, barriers, chains</td></tr>
+     * <tr><td>direct</td><td>1</td><td></td></tr>
      * <tr><td>groups</td><td>20</td><td></td></tr>
      * <tr><td>none</td><td>0</td><td></td></tr>
      * <tr><td>standard</td><td>7</td><td></td></tr>

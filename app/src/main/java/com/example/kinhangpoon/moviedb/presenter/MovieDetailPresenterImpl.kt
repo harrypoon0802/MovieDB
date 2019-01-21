@@ -1,5 +1,8 @@
 package com.example.kinhangpoon.moviedb.presenter
 
-class MovieDetailPresenterImpl(val view: MovieDetailContract.View) : MovieDetailContract.Presenter {
+import com.example.kinhangpoon.moviedb.view.MovieDetailView
+import javax.inject.Inject
+
+class MovieDetailPresenterImpl @Inject constructor(val view: MovieDetailView) {
 
 }

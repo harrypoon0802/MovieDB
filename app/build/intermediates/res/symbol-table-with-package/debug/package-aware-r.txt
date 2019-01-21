@@ -890,7 +890,7 @@ string app_name
 string loading_data
 string movies
 string network_error
-string no_more_results
+string no_results
 string query_hint
 string search_menu_title
 string status_bar_notification_info_overflow

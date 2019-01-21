@@ -5,9 +5,9 @@ import com.example.kinhangpoon.moviedb.model.response.MovieResponse
 import com.example.kinhangpoon.moviedb.model.response.Response
 import retrofit2.Call
 import retrofit2.Callback
+import javax.inject.Inject
 
-
-class MovieSearchRepository(val movieSearchApi: MovieSearchApi?) {
+class MovieSearchRepository @Inject constructor(val movieSearchApi: MovieSearchApi?) {
 
     fun searchByQuery(text: String, index: String, movieSearchCallback: MovieSearchRepository.movieSearchCallback) {
         movieSearchApi?.searchMovie(BuildConfig.ApiKey, text, index)

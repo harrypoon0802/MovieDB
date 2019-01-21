@@ -374,7 +374,7 @@
     <string name="loading_data">Loading Data</string>
     <string name="movies">Movies </string>
     <string name="network_error">Network Error</string>
-    <string name="no_more_results">No More results</string>
+    <string name="no_results">No results</string>
     <string name="query_hint">Search by Movie</string>
     <string name="search_menu_title">Search</string>
     <string name="status_bar_notification_info_overflow">999+</string>

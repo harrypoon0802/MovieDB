@@ -1,6 +1,7 @@
 package com.example.kinhangpoon.moviedb.presenter
 
 import com.example.kinhangpoon.moviedb.model.service.MovieSearchRepository
+import com.example.kinhangpoon.moviedb.view.MovieSearchView
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
@@ -9,7 +10,7 @@ import org.junit.Test
 
 class MovieSearchPresenterImplTest {
     @RelaxedMockK
-    lateinit var mockView: MovieSearchContract.View
+    lateinit var mockView: MovieSearchView
     @RelaxedMockK
     lateinit var mockRepository: MovieSearchRepository
 
