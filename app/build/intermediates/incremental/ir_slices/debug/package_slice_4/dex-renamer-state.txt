@@ -1,4 +1,4 @@
-#Sun Jan 20 21:14:49 EST 2019
+#Mon Jan 21 00:40:39 EST 2019
 base.0=/Users/KinhangPoon/AndroidStudioProjects/MovieDB/app/build/intermediates/transforms/dexMerger/debug/4
 path.0=classes.dex
 renamed.0=classes.dex

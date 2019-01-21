@@ -25,6 +25,9 @@ public final class MovieDetailActivity extends android.support.v7.app.AppCompatA
     private final void setupFragment(com.example.kinhangpoon.moviedb.model.response.MovieResponse movie) {
     }
     
+    /**
+     * * save MovieResponse when screen orientation changes
+     */
     @java.lang.Override()
     protected void onSaveInstanceState(@org.jetbrains.annotations.Nullable()
     android.os.Bundle outState) {

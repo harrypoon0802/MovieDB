@@ -126,9 +126,6 @@ public final class MovieSearchFragment extends android.support.v4.app.Fragment i
     android.os.Bundle savedInstanceState) {
     }
     
-    private final void resolveDaggerDependency() {
-    }
-    
     @org.jetbrains.annotations.Nullable()
     @java.lang.Override()
     public android.view.View onCreateView(@org.jetbrains.annotations.NotNull()
@@ -144,7 +141,13 @@ public final class MovieSearchFragment extends android.support.v4.app.Fragment i
     android.os.Bundle savedInstanceState) {
     }
     
+    private final void resolveDaggerDependency() {
+    }
+    
     private final void fetchData(java.lang.String text, int index) {
+    }
+    
+    private final void showNoResultMessage() {
     }
     
     @java.lang.Override()
@@ -154,9 +157,6 @@ public final class MovieSearchFragment extends android.support.v4.app.Fragment i
     @java.lang.Override()
     public void updateView(@org.jetbrains.annotations.NotNull()
     java.util.List<com.example.kinhangpoon.moviedb.model.response.MovieResponse> movies) {
-    }
-    
-    private final void showNoResultMessage() {
     }
     
     @java.lang.Override()

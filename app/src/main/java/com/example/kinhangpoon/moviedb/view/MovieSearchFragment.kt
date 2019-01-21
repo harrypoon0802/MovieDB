@@ -3,6 +3,7 @@ package com.example.kinhangpoon.moviedb.view
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.os.IBinder
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -12,10 +13,12 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
 import android.widget.Toast
 import com.example.kinhangpoon.moviedb.MovieSearchActivity.Companion.QUERY_EXTRAS
 import com.example.kinhangpoon.moviedb.R
+import com.example.kinhangpoon.moviedb.common.GUIUtil
 import com.example.kinhangpoon.moviedb.dagger.components.DaggerMovieSearchComponent
 import com.example.kinhangpoon.moviedb.dagger.components.DaggerNetworkComponent
 import com.example.kinhangpoon.moviedb.dagger.module.MovieSearchModule
@@ -104,6 +107,10 @@ class MovieSearchFragment : Fragment(), MovieSearchView {
             if (!text.isEmpty()) {
                 fetchData(text, index)
             }
+            /**
+             * close keyboard
+             */
+            GUIUtil.hideSoftKeyboard(view)
         }
 
         linearLayoutManager = LinearLayoutManager(context)
