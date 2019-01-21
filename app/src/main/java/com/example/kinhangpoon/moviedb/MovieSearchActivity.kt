@@ -17,6 +17,7 @@ import com.example.kinhangpoon.moviedb.view.MovieSearchFragment
  * used RecycleView to show the lists of movie results
  * implemented lazy loading when scrolled to the bottom of the list and appended to the list
  * use a split screen for tablets
+ * add unit test for MovieSearchPresenterImpl class and MovieSearchRepository class
  */
 class MovieSearchActivity : AppCompatActivity(), MovieSearchFragment.MovieHost {
 
@@ -34,7 +35,9 @@ class MovieSearchActivity : AppCompatActivity(), MovieSearchFragment.MovieHost {
         }
         setupFragment(query);
     }
-
+    /**
+     * save query text when screen orientation changes
+     */
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putString(QUERY_EXTRAS, query)
@@ -48,7 +51,9 @@ class MovieSearchActivity : AppCompatActivity(), MovieSearchFragment.MovieHost {
                 MovieSearchFragment::class.java.simpleName
             ).commit()
     }
-
+    /**
+     * dialog will be shown while making api call and will be disappeared once getting response
+     */
     override fun showLoadingDialog(isShow: Boolean) {
         if (isShow) {
             val progressDialogFragment =
@@ -79,7 +84,9 @@ class MovieSearchActivity : AppCompatActivity(), MovieSearchFragment.MovieHost {
 
         startActivity(intent)
     }
-
+    /**
+     * check if the device is tablet
+     */
     fun isTablet(): Boolean {
         val xlarge =
             getResources().getConfiguration().screenLayout and
@@ -89,7 +96,9 @@ class MovieSearchActivity : AppCompatActivity(), MovieSearchFragment.MovieHost {
                     Configuration.SCREENLAYOUT_SIZE_MASK == Configuration.SCREENLAYOUT_SIZE_LARGE
         return xlarge || large
     }
-
+    /**
+     * update query text
+     */
     override fun setQueryText(text: String) {
         query = text
     }

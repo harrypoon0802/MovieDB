@@ -28,7 +28,9 @@ class MovieDetailActivity : AppCompatActivity() {
                 MovieDetailFragment::class.java.simpleName
             ).commit()
     }
-
+    /**
+     * save MovieResponse when screen orientation changes
+     */
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putParcelable(MOVIE_EXTRAS, movie)

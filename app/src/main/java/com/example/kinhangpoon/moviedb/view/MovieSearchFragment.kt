@@ -70,18 +70,6 @@ class MovieSearchFragment : Fragment(), MovieSearchView {
         })
     }
 
-    private fun resolveDaggerDependency() {
-        val networkComponent = DaggerNetworkComponent
-            .builder()
-            .networkModule(NetworkModule(BASE_URL, requireContext()))
-            .build()
-
-        DaggerMovieSearchComponent.builder()
-            .networkComponent(networkComponent)
-            .movieSearchModule(MovieSearchModule(this))
-            .build().inject(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_movie_search, container, false)
     }
@@ -148,12 +136,31 @@ class MovieSearchFragment : Fragment(), MovieSearchView {
         })
     }
 
+    private fun resolveDaggerDependency() {
+        val networkComponent = DaggerNetworkComponent
+            .builder()
+            .networkModule(NetworkModule(BASE_URL, requireContext()))
+            .build()
+
+        DaggerMovieSearchComponent.builder()
+            .networkComponent(networkComponent)
+            .movieSearchModule(MovieSearchModule(this))
+            .build().inject(this)
+    }
+
     private fun fetchData(text: String, index: Int) {
+        /**
+         * based on the requirement (1<index<=100), if index > 100, don't make a network call
+         */
         if (index > 100) {
             showNoResultMessage()
             return;
         }
         Handler().postDelayed({ movieSearchPresenter.searchByQuery(text, "$index") }, 300)
+    }
+
+    private fun showNoResultMessage() {
+        Toast.makeText(context, R.string.no_results, Toast.LENGTH_LONG).show()
     }
 
     override fun showErrorMessage() {
@@ -167,10 +174,6 @@ class MovieSearchFragment : Fragment(), MovieSearchView {
             showNoResultMessage()
             title.visibility = View.GONE
         }
-    }
-
-    private fun showNoResultMessage() {
-        Toast.makeText(context, R.string.no_results, Toast.LENGTH_LONG).show()
     }
 
     override fun showLoadingDialog() {
